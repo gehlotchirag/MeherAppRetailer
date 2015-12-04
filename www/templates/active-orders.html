@@ -1,12 +1,17 @@
 <ion-view view-title="Order List">
   <ion-content>
+      <div class="row item item-divider">
+          <span class="col text-center">{{orderHeading}}</span>
+      </div>
+
       <ion-list>
       <ion-item  class="item item-thumbnail-left" ng-repeat="order in activeOrderLists" ng-click="goToorder(order)" ng-class="{'blink':order.orderStatus=='sent','strike-order':order.orderStatus=='rejected','strike-order':order.orderStatus=='canceled'}">
-        <img src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-4/128/Shopping-cart-full-icon.png">
-        <h2>{{order.customer.mobile}}</h2>
+        <img src="img/cart.png">
+        <span>{{order.customer.mobile}}</span>
+        <span style="float: right;">{{order.created | date:'shortTime'}}</span>
           <p>{{order.customer.addLine1}}</p>
           <p>{{order.customer.addLine2}}</p>
-        <span class="badge badge-assertive">{{order.order.orderitem.length}}</span>
+        <span class="badge badge-assertive" style="top:28px;">{{order.order.orderitem.length}}</span>
       </ion-item>
     </ion-list>
   </ion-content>

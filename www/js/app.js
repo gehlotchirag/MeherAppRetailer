@@ -6,7 +6,7 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 var db = null;
-var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','ngCordova','greatCircles','ion-google-place'])
+var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','ngCordova'])
 
     .run(function($ionicPlatform,$state,$cordovaSQLite) {
       $ionicPlatform.ready(function() {
@@ -25,7 +25,8 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
             $state.go($state.current, {}, {reload: true});
           }
         }, false);
-          db = $cordovaSQLite.openDB("my4.db");
+        //alert("DB done")
+          db = $cordovaSQLite.openDB("meherRetailer.db");
         $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS Meher_store (_id text NOT NULL UNIQUE, deviceId text, name text,created text,closeTime text, startTime text,deliveryTime text,deliveryDistance text,mobile text,city text, category text,address text, loc text)");
       });
     })
@@ -42,15 +43,6 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
             controller: 'AppCtrl'
           })
 
-          .state('app.postorder', {
-            url: '/postorder',
-            views: {
-              'menuContent': {
-                templateUrl: 'templates/post-order.html',
-                controller: 'postOrderCtrl'
-              }
-            }
-          })
           .state('app.contact', {
             url: '/contact',
             views: {
@@ -60,57 +52,11 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
               }
             }
           })
-          .state('app.categories', {
-            url: '/categories',
-            views: {
-              'menuContent': {
-                templateUrl: 'templates/categories.html',
-                controller: 'CategoriesCtrl'
-              }
-            }
-          })
-          .state('app.showcase', {
-            url: '/categories/:storelistId/:storeId/:subProductId/:productId',
-            views: {
-              'menuContent': {
-                templateUrl: 'templates/showCase.html',
-                controller: 'showCaseCtrl'
-              }
-            }
-          })
           .state('app.about', {
             url: '/about',
             views: {
               'menuContent': {
                 templateUrl: 'templates/about.html'
-              }
-            }
-          })
-          .state('app.storelist', {
-            url: '/categories/:storelistId',
-            cache: false,
-            views: {
-              'menuContent': {
-                templateUrl: 'templates/storelist.html',
-                controller: 'StorelistCtrl'
-              }
-            }
-          })
-          .state('app.store', {
-            url: '/categories/:storelistId/:storeId',
-            views: {
-              'menuContent': {
-                templateUrl: 'templates/store.html',
-                controller: 'storeCtrl'
-              }
-            }
-          })
-          .state('app.orderPage', {
-            url: '/order',
-            views: {
-              'menuContent': {
-                templateUrl: 'templates/order.html',
-                controller: 'orderCtrl'
               }
             }
           })
@@ -159,22 +105,19 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
                 controller: 'shareCtrl'
               }
             }
-          });
-
-      //.state('app.singleStore', {
-      //  url: '/categories/:storelistId',
-      //  views: {
-      //    'menuContent': {
-      //      templateUrl: 'templates/storelist.html',
-      //      controller: 'StorelistCtrl'
-      //    }
-      //  }
-      //});
+          })
+      .state('app.profile', {
+        url: "/profile",
+        views: {
+          'menuContent': {
+            templateUrl: "templates/profile.html",
+            controller: 'profileCtrl'
+          }
+        }
+      });
 
       // if none of the above states are matched, use this as the fallback
-      //$urlRouterProvider.otherwise('/app/activeorders');
-      $urlRouterProvider.otherwise('/app/orderdetail/wds');
-      //$urlRouterProvider.otherwise('/app/login');
+      $urlRouterProvider.otherwise('/app/activeorders');
     });
 
 

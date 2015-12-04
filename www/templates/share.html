@@ -1,42 +1,59 @@
 <ion-view view-title="Share">
-  <ion-content>
-    <div class="card">
+    <ion-content>
+        <div class="card">
 
-      <div class="item item-divider">
-        <b> Share this app</b>
-      </div>
-
-      <ul class="list">
-        <li class="item" id="displayLabel">
-          <div class="item item-text-wrap">
-            <button class="button button-block button-royal item-icon-left" ng-click="whatsappShare()">
-              <i class="icon ion-social-whatsapp"></i>
-              WhatsApp
-            </button>
+            <div class="item item-divider">
+                <b> Share this app</b>
             </div>
-        </li>
 
-        <ul class="list">
-          <li class="item" id="displayLabel">
-            <div class="item item-text-wrap">
-              <button class="button button-block button-royal item-icon-left" ng-click="twitterShare()">
-                <i class="icon ion-social-twitter"></i>
-                twitter
-              </button>
-            </div>
-          </li>
+            <ul class="list">
+                <li class="item">
+                    <div class="item item-text-wrap">
+                        <button class="button button-block button-balanced item-icon-left" ng-click="whatsappShare()">
+                            <i class="icon ion-social-whatsapp"></i>
+                            WhatsApp
+                        </button>
+                    </div>
+                </li>
 
-          <li class="item" id="displayLabel">
-            <div class="item item-text-wrap">
-              <button class="button button-block button-royal item-icon-left" ng-click="OtherShare()">
-                <i class="icon ion-android-share-alt"></i>
-                Other
-              </button>
-            </div>
-          </li>
-        </ul>
+                <li class="item">
+                    <div class="item item-text-wrap">
+                        <button class="button button-block button-energized item-icon-left" ng-click="smsShare()">
+                            <i class="icon ion-email"></i>
+                            Sms
+                        </button>
+                    </div>
+                </li>
 
-    </div>
+                <li class="item">
+                    <div class="item item-text-wrap">
+                        <button class="button button-block item-icon-left" ng-click="facebookShare()" style="background-color:#3A5795 ;color:white">
+                            <i class="icon ion-social-facebook"></i>
+                            Facebook
+                        </button>
+                    </div>
+                </li>
 
-  </ion-content>
+                <li class="item">
+                    <div class="item item-text-wrap">
+                        <button class="button button-block item-icon-left" ng-click="twitterShare()" style="background-color:#659FCB;color:white">
+                            <i class="icon ion-social-twitter"></i>
+                            twitter
+                        </button>
+                    </div>
+                </li>
+
+                <li class="item">
+                    <div class="item item-text-wrap">
+                        <button class="button button-block button-royal item-icon-left" ng-click="OtherShare()">
+                            <i class="icon ion-android-share-alt"></i>
+                            Other
+                        </button>
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+
+    </ion-content>
 </ion-view>

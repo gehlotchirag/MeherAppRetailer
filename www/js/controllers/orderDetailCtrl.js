@@ -3,7 +3,9 @@
  */
 angular.module('starter.controllers')
 
-    .controller('orderDetailCtrl', function($http,$scope,OrderData,$location) {
+    .controller('orderDetailCtrl', function($http,$scope,OrderData,$location,$ionicPopup) {
+      $scope.availableItems = false;
+      $scope.counterItems = 0;
       $scope.currentOrder = OrderData.getOrder();
       if ($scope.currentOrder)
       $scope.currentOrder = {
@@ -89,11 +91,25 @@ angular.module('starter.controllers')
       $scope.shopCategory = window.localStorage['meherShopCategory'];
 
       $scope.acknowledgeOrder = function(product){
-        if (product.available)
-        $scope.grandTotal = $scope.grandTotal + product.price;
-        else
+        if (product.available) {
+          $scope.counterItems = $scope.counterItems +1;
+          if($scope.availableItems == false)
+          $scope.availableItems = true;
+          $scope.grandTotal = $scope.grandTotal + product.price;
+        }
+        else{
+          $scope.counterItems = $scope.counterItems - 1;
           $scope.grandTotal = $scope.grandTotal - product.price;
+        }
         $scope.currentBlink = $scope.currentBlink +1;
+      };
+
+
+      $scope.acceptItem = function(product,event){
+        if(event.target.id !== "acceptItemFlag") {
+          product.available = !product.available;
+          $scope.acknowledgeOrder(product)
+        }
       };
 
       $scope.updateOrder = function(){
@@ -105,6 +121,7 @@ angular.module('starter.controllers')
           alert("Error occured. Pls try again!")
         });
       };
+
 
       $scope.acceptOrder = function(){
         $scope.orderStatus = "accepted";
@@ -120,4 +137,46 @@ angular.module('starter.controllers')
         $scope.orderStatus = "rejected";
         $scope.updateOrder();
       };
+
+      $scope.showAcceptAlert = function() {
+        if ($scope.availableItems ==  true)
+        $ionicPopup.alert({
+          title: 'Accept Order',
+          //template: $scope.counterItems+'Items Accepted."+<li>+"Please delivery Good quality in time for best ratings"+</li>
+          template: "<li>"+$scope.counterItems+ " Items Accepted.</li><li>Deliver Good Quality Items</li><li>Deliver In Time</li>"
+        }).then(function(res) {
+          $scope.acceptOrder();
+        });
+        else{
+          $ionicPopup.alert({
+            title: 'Choose Available Items',
+            template: 'No items accepted, clik On items to accept it'
+          }).then(function(res) {
+            $scope.acceptOrder();
+          });
+        }
+
+      };
+
+      $scope.showRejectAlert= function() {
+        $ionicPopup.confirm({
+          title: 'Reject Order',
+          template: 'Are you sure you want to REJECT this orders',
+          okText: 'Yes', // String (default: 'Yes'). The text of the OK button.
+          cancelText: 'No', // String (default: 'No'). The text of the Cancel button.
+        }).then(function(res) {
+          if(res) {
+            console.log('You are sure');
+            $scope.rejectOrder();
+          } else {
+            console.log('You are not sure');
+          }
+        });
+      };
+
+      $scope.CallTel = function(tel) {
+        window.open('tel:'+'+91'+tel)
+        //window.location.href = 'tel:'+ tel;
+      }
+
     });

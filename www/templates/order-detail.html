@@ -1,16 +1,25 @@
 <ion-view view-title="Order Summary">
     <ion-content>
-        <div class="list" style="margin-bottom:0px">
-            <div class="item item-button-right">
-                <h3><b>{{currentOrder.customer.mobile}}</b></h3>
+        <div class="row list item" style="margin-bottom:0px;border-right: 0px;">
+            <div class="col" style="padding:11px;">
+                <div class="item-button-left">
                 <button class="button button-balanced" ng-click="CallTel({{currentOrder.customer.mobile}})">
                     <i class="icon ion-ios-telephone"></i>
                 </button>
+                    </div>
+                <b style="padding-left: 52px;">{{currentOrder.customer.mobile}}</b>
+            </div>
+            <div class="col text-right" style="padding:11px; padding-right: 50px;">
+                <div class="item-button-right">
+                    <button class="button button-icon icon" style="right: 6px;">
+                        <i class="icon ion-clock"></i>
+                    </button>
+                </div>
+                <i>{{currentOrder.created | date:'shortTime'}}</i>
             </div>
         </div>
 
-
-        <div class="row">
+        <div class="row" style="margin-top: 6px;">
             <div class="col">
                 <p style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
           <span>
@@ -19,61 +28,10 @@
             {{currentOrder.customer.addLine2}}
             </span>
                 </p>
-                <!--<div style="color: #979797;">-->
-                <!--<span>-->
-                <!--<i class="ion-android-bicycle" style="font-size: 22px;"></i>-->
-                <!--{{StoreDistance}} KM Away-->
-                <!--</span>-->
-                <!--<span style="float: right;" >-->
-                <!--Delivers in:-->
-                <!--<i class="ion-clock" style="font-size: 20px;"></i>-->
-                <!--30 Mins.-->
-                <!--</span>-->
-                <!--</div>-->
             </div>
         </div>
 
-        <!--</br></br>-->
-        <!--<div class="text-center">-->
-        <!--<h5><span>Type products Below </span><span ng-if="storeCategory.type=='general'">or Select From Menu</span></h5>-->
-        <!--</div>-->
-        <!--<div id="customize-order">-->
-        <!--<div class="text-center" style="margin-bottom:0px;margin-top: 2px;font-weight: bold;">-->
-        <!--<span>Type Products Below </span>&lt;!&ndash; ngIf: storeCategory.type=='general' &ndash;&gt;<span ng-if="storeCategory.type=='general'" class="">or Select From Menu</span>&lt;!&ndash; end ngIf: storeCategory.type=='general' &ndash;&gt;-->
-        <!--</div>-->
-        <!--<div class="bar bar-header item-input-inset addcustom" style="margin-top: -3px;">-->
-        <!--<div class="col-50">-->
-        <!--<label class="item-input-wrapper reverse-wrapper">-->
-        <!--<i class="icon ion-compose"></i>-->
-        <!--<input class="google-place-search ng-pristine ng-valid ng-touched" type="text" ng-model="customProduct.name" placeholder="Item Name">-->
-        <!--</label>-->
-        <!--</div>-->
-        <!--<div class="col">-->
-        <!--<label class="item-input-wrapper reverse-wrapper">-->
-        <!--<i class="icon ion-funnel"></i>-->
-        <!--<input class="google-place-search ng-pristine ng-valid ng-touched" type="text" ng-model="customProduct.customQuantity" placeholder="Qty(1 KG)">-->
-        <!--</label>-->
-        <!--</div>-->
-        <!--<button class="button button-positive" ng-click="addcustomProduct(customProduct)">Add</button>-->
-        <!--</div>-->
-        <!--</div>-->
 
-        <!--<div id="custom-order" class="row list">-->
-        <!--<div class="col col-50">-->
-        <!--<label class="item item-input">-->
-        <!--<input type="text" ng-model="customProduct.name" placeholder="Item Name">-->
-        <!--</label>-->
-        <!--</div>-->
-        <!--<div class="col col-30">-->
-        <!--<label class="item item-input">-->
-        <!--<input type="text" class="cust-qty" ng-model="customProduct.customQuantity" placeholder="Qty(1 KG)">-->
-        <!--</label>-->
-        <!--</div>-->
-        <!--<div class="col col-20 text-right">-->
-        <!--<button class="button button-positive" ng-click="addcustomProduct(customProduct)">Add-->
-        <!--</button>-->
-        <!--</div>-->
-        <!--</div>-->
 
         <div class="row item item-divider">
             <span class="col">Item List ({{currentOrder.order.orderitem.length}})</span>
@@ -81,8 +39,7 @@
         </div>
         <ion-scroll style="max-height: 280px;">
             <ion-list>
-                <!--<ion-item class="row" ng-repeat="product in currentOrder.order.orderitem"  style="margin-top: 0px;" ng-class="{'order-enabled':product.available, 'order-disabled':!product.available,'order-blink': $index==currentBlink && $index!==0,'order-blink-constant': $index==!bilnkFirst}">-->
-                <ion-item class="row" ng-repeat="product in currentOrder.order.orderitem"  style="margin-top: 0px;" ng-class="{'order-enabled':product.available, 'order-disabled':!product.available,'order-blink': $index==currentBlink}">
+                <ion-item class="row" ng-repeat="product in currentOrder.order.orderitem"  style="margin-top: 0px;" ng-class="{'order-enabled':product.available, 'order-disabled':!product.available,'order-blink': $index==currentBlink}" ng-click="acceptItem(product,$event)">
                     <div class="col col-20">
                         <img ng-src='http://images.getmeher.com/{{shopCategory}}/{{product.ImgFileName}}' width="64px" height="64px">
                     </div>
@@ -108,7 +65,7 @@
 
                     <div class="col col-10" style="margin-right: 12px;margin-top: 3px">
                         <label class="checkbox">
-                            <input type="checkbox" ng-model="product.available" ng-change="acknowledgeOrder(product)">
+                            <input type="checkbox" id="acceptItemFlag" ng-model="product.available" ng-change="acknowledgeOrder(product)">
                             <!--<input type="checkbox" ng-model="product.available" ng-change="grandTotal = grandTotal + product.price;">-->
                         </label>
                     </div>
@@ -122,16 +79,16 @@
 
         <div class="row" ng-class="{'blinkblue': orderStatus == 'sent'}" ng-hide="orderStatus !== 'sent'" style="margin-top: 1px;">
             <div class="col">
-                <button id="verify" ng-click="acceptOrder()" class="button button-block icon-right ion-checkmark-round button-balanced">Accept</button>
+                <button id="verify" ng-click="showAcceptAlert()" class="button button-block icon-right ion-checkmark-round button-balanced">Accept</button>
             </div>
             <div class="col">
-                <button ng-click="rejectOrder()"  class="button button-block icon-right ion-close button-assertive">Reject</button>
+                <button ng-click="showRejectAlert()"  class="button button-block icon-right ion-close button-assertive">Reject</button>
             </div>
         </div>
 
         <div class="row" ng-show="orderStatus == 'accepted'" >
             <div class="col text-center">
-                <button ng-click="acceptOrder()" class="button button-block icon-right ion-checkmark-round button-balanced">Delivery Sent</button>
+                <button ng-click="deliverySent()" class="button button-block icon-right ion-checkmark-round button-balanced">Delivery Sent</button>
             </div>
         </div>
 

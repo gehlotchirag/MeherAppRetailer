@@ -394,28 +394,27 @@ background-color: transparent;
 }
 
 .order-blink {
-    animation: order-blink 1s steps(5, start) 5;
-    -webkit-animation: order-blink 1s steps(5, start) 5;
+    animation: order-blink 1s steps(9, start) 9;
+    -webkit-animation: order-blink 1s steps(9, start) 9;
 }
 @keyframes order-blink {
-    from { opacity: 0.3; }
-    to { opacity: 1; }
+    from { opacity: 0.3; font-weight: normal}
+    to { opacity: 1; font-weight: bold}
 }
 @-webkit-keyframes order-blink {
-    from { opacity: 0.3; }
-    to { opacity: 1; }
+    from { opacity: 0.3; font-weight: normal}
+    to { opacity: 1; font-weight: bold}
 }
-
 
 .order-blink-constant {
-    animation: order-blink-constant 1s steps(5, start) infinite;
-    -webkit-animation: order-blink-constant 1s steps(5, start) infinite;
+    animation: order-blink-constant 1s steps(10, start) infinite;
+    -webkit-animation: order-blink-constant 1s steps(10, start) infinite;
 }
 @keyframes order-blink-constant {
-    from { opacity: 0.3; }
-    to { opacity: 1; }
+    from { opacity: 0; font-weight: normal}
+    to { opacity: 1; font-weight: bold}
 }
 @-webkit-keyframes order-blink-constant {
-    from { opacity: 0.3; }
-    to { opacity: 1; }
+    from { opacity: 0; font-weight: normal}
+    to { opacity: 1; font-weight: bold}
 }
