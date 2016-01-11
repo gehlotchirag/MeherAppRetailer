@@ -24,7 +24,6 @@
     "com.ionic.keyboard",
     "cordova-plugin-geolocation",
     "org.apache.cordova.vibration",
-    "cordova.plugins.diagnostic",
     {
       "locator": "https://github.com/phonegap-build/PushPlugin.git",
       "id": "com.phonegap.plugins.PushPlugin"
@@ -40,19 +39,16 @@
     {
       "locator": "https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin.git",
       "id": "cordova-plugin-x-socialsharing"
-    }
+    },
+    "cordova-plugin-whitelist@~1.1.0",
+    "cordova-sms-plugin"
   ],
   "cordovaPlatforms": [
-    "android",
-    {
-      "platform": "android",
-      "version": "",
-      "locator": "android"
-    },
     {
       "platform": "ios",
       "version": "",
       "locator": "ios"
-    }
+    },
+    "android"
   ]
 }

@@ -42,31 +42,5 @@ angular.module('starter.controllers')
         alert("Clicked");
       };
 
-      //$http({
-      //  method: 'GET',
-      //  // url: 'http://example.com',
-      //  url: 'https://api.myjson.com/bins/1tpaf'
-      //}).then(function successCallback(response) {
-      //  // alert("Data Found")
-      //  $scope.profileData=response.data;
-      //  if ($scope.profileData.deliveryDistance == 0.5)
-      //    $scope.tempDeliveryDistance =0;
-      //  else
-      //    $scope.tempDeliveryDistance = $scope.profileData.deliveryDistance;
-      //  /*
-      //   $scope.tempDeliveryDistance =parseInt($scope.profileData.deliveryDistance);
-      //   if( $scope.tempDeliveryDistance==0) {
-      //   $scope.valueTempDeliveryDistance=0.5;
-      //   }
-      //   else{
-      //   $scope.valueTempDeliveryDistance= $scope.tempDeliveryDistance;
-      //   }
-      //   console.log($scope.tempDeliveryDistance)
-      //   */
-      //}, function errorCallback(response) {
-      //  alert("Data not Found");
-      //  // called asynchronously if an error occurs
-      //  // or server returns response with an error status.
-      //});
 
     });

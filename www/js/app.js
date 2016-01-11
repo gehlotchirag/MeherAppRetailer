@@ -20,14 +20,15 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
           StatusBar.styleDefault();
         }
         document.addEventListener("resume", function() {
-          if($state.current.name == "app.storelist")
+          if($state.current.name == "app.activeorders" || $state.current.name == "app.credits")
           {
             $state.go($state.current, {}, {reload: true});
           }
         }, false);
         //alert("DB done")
-          db = $cordovaSQLite.openDB("meherRetailer.db");
+        db = $cordovaSQLite.openDB("meherRetailer.db");
         $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS Meher_store (_id text NOT NULL UNIQUE, deviceId text, name text,created text,closeTime text, startTime text,deliveryTime text,deliveryDistance text,mobile text,city text, category text,address text, loc text)");
+
       });
     })
 
@@ -59,6 +60,15 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
                 templateUrl: 'templates/about.html'
               }
             }
+          }).state('app.credits', {
+            url: '/credits',
+            cache: false,
+            views: {
+              'menuContent': {
+                templateUrl: 'templates/credits.html',
+                controller: 'creditsCtrl'
+              }
+            }
           })
           .state('app.login', {
             url: '/login',
@@ -66,15 +76,6 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
               'menuContent': {
                 templateUrl: 'templates/login.html',
                 controller: 'loginCtrl'
-              }
-            }
-          })
-          .state('app.otp', {
-            url: '/otp',
-            views: {
-              'menuContent': {
-                templateUrl: 'templates/otp.html',
-                controller: 'otpCtrl'
               }
             }
           })
@@ -117,6 +118,7 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
       });
 
       // if none of the above states are matched, use this as the fallback
+      //$urlRouterProvider.otherwise('/app/credits');
       $urlRouterProvider.otherwise('/app/activeorders');
     });
 

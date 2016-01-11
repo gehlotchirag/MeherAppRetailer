@@ -156,7 +156,17 @@ angular.module('starter.controllers', [])
         // Create a random userid to store with it
         var onSuccess = function(position) {
           window.currentLoc = position;
-          var user = {deviceID: window.localStorage['MeherDeviceId'], user: window.localStorage['MeherDeviceId'] , type: type, token: $scope.regId };
+          var userLoc = [window.currentLoc.coords.longitude,window.currentLoc.coords.latitude];
+          var user = {
+            deviceID: window.localStorage['MeherDeviceId'],
+            user: window.localStorage['MeherDeviceId'] ,
+            "loc": {
+              "coordinates": userLoc,
+              "type": "Point"
+            },
+            type: type,
+            token: $scope.regId
+          };
           //alert("Post token for registered device with data " + JSON.stringify(user));
           //Log.d("meher" , "Post token for registered device with data")
 

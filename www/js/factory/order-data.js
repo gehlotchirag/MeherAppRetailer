@@ -11,7 +11,7 @@ angular.module('starter.controllers')
           return OrderData;
         },
         setOrder: function (OrderInfo) {
-          OrderData = angular.copy(OrderInfo);
+          angular.copy(OrderInfo,OrderData);
           return OrderData;
         }
       };

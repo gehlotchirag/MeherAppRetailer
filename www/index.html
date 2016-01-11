@@ -35,7 +35,7 @@
     <script src="js/controllers.js"></script>
     <script src="js/controllers/loginCtrl.js"></script>
     <script src="js/controllers/contactCtrl.js"></script>
-    <script src="js/controllers/otpCtrl.js"></script>
+    <script src="js/controllers/creditsCtrl.js"></script>
 
     <script src="js/controllers/shareCtrl.js"></script>
     <script src="js/controllers/activeOrders.js"></script>
@@ -66,24 +66,6 @@
   <body ng-app="starter" ng-controller="LoadCtrl">
   <ion-nav-view></ion-nav-view>
 
-  <ion-footer-bar align-title="left" class="bar-light" ng-if="cartList.length > 0">
-    <div class="buttons">
-      <a class="button icon ion-ios-cart-outline" href="#/app/order">
-        <span id="cart-badge" class="badge badge-assertive">{{cartList.length}}</span>
-      </a>
-    </div>
-    <span class="title price" ng-if="currentPath  !== '/app/order'">
-    <b>{{cartList[cartList.length-1].name | limitTo:10}}</b>
-    <span style="color: #aaa;font-size: 12px;
-"><i>just added</i></span>
-    </span>    <!--<h1 class="title price" >{{grandTotal}}</h1>-->
-    <div class="buttons">
-      <a class="button icon-right ion-arrow-right-c button-positive" href="#/app/order" ng-if="currentPath  !== '/app/order'">Order Now</a>
-    </div>
-    <div class="buttons pull-right">
-      <button class="button icon-right ion-arrow-right-c button-balanced" ng-click="composeSMS()" ng-if="currentPath  === '/app/order'">Place Order</button>
-    </div>
-  </ion-footer-bar>
 
   </body>
 

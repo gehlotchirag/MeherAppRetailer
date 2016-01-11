@@ -6,8 +6,6 @@ angular.module('starter.controllers')
     .controller('loginCtrl', function($scope, $ionicPopup, $timeout, $window, $location,$http, $cordovaDevice,$ionicPlatform,$cordovaSQLite,$ionicModal,$ionicLoading) {
       $scope.loginData.deviceId = window.localStorage['MeherDeviceId'];
       $scope.loginData.opt = null;
-      window.localStorage['otp'];
-      var tempOtp = JSON.parse(window.localStorage['otp'] || '');
 
       $scope.showVerifyLoading = function() {
         $ionicLoading.show({
@@ -27,7 +25,7 @@ angular.module('starter.controllers')
         $scope.otpRequested = false;
       }
 
-      if ( tempOtp && tempOtp !=='')
+      if ( typeof window.localStorage['otp'] !== "undefined")
         $scope.otpRequested = true;
       else
         $scope.otpRequested = false;
@@ -67,28 +65,32 @@ angular.module('starter.controllers')
         else {
           window.localStorage['retailerLoginData'] = JSON.stringify($scope.loginData);
           window.localStorage['otp'] = Math.floor(Math.random() * 9000) + 1000;
-          var msg = window.localStorage['otp'] +" is your OTP Code for Meher."+"\n"+" Order instantly from Meher.";
+          //var msg = window.localStorage['otp'] +" is your OTP Code for Meher."+"\n"+" Order instantly from Meher.";
+          var msg = window.localStorage['otp'] +" is your OTP code for Meher app";
+          var mobile = $scope.loginData.mobile;
+
+          //https://enterprise.smsgupshup.com/GatewayAPI/rest?method=SendMessage&send_to=919699999114&msg=123%20is%20your%20OTP%20code%20for%20Meher%20app&msg_type=TEXT&userid=2000141701&password=Gandhi007&auth_scheme=PLAIN
+
+          var reqURL = 'https://enterprise.smsgupshup.com/GatewayAPI/rest?method=SendMessage&send_to=';
+          reqURL += '91' + mobile + '&msg=' + encodeURI(msg);
+          reqURL += '&msg_type=TEXT&userid=2000141701&password=Gandhi007&auth_scheme=PLAIN';
+
+          console.log("&&&&&&&&&&&&&&&& -------- &&&&&&&&&&&&&& --------- &&&&&&&&&&&&&")
+          console.log(reqURL)
+          console.log("&&&&&&&&&&&&&&&& -------- &&&&&&&&&&&&&& --------- &&&&&&&&&&&&&")
+
           $http({
-            url: 'http://api.smscountry.com/SMSCwebservice_bulk.aspx?',
-            method: "POST",
-            params: {
-              User:"mehertech",
-              passwd:"developer007",
-              mobilenumber: "9820272106",
-              message: msg,
-              sid:"mehera",
-              mtype:"N",
-              DR:"Y"
-            }
+            url: reqURL,
+            method: "GET"
           }).then(function(response) {
                 // success
-                //alert("SMS Send");
-                console.log(response);
+                //alert("SMS Send" +JSON.stringify(response));
+                console.log(JSON.stringify(response));
               },
               function(response) { // optional
                 // failed
-                $scope.downloadSMS = null;
-                console.log(response);
+                console.log(JSON.stringify(response));
+                //alert("SMS not Send" +JSON.stringify(response));
               });
 
           $scope.loginData.opt = null;
@@ -97,6 +99,7 @@ angular.module('starter.controllers')
       };
 
       $scope.saveStore = function(store) {
+
         //alert(JSON.stringify(store));
         var query = "INSERT INTO Meher_store (_id, deviceId, name,created,closeTime,startTime,deliveryTime,deliveryDistance,mobile ,city, category ,address, loc) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
         //var query = "INSERT INTO Meher_store (_id,name,created,mobile,city,category,address,loc) VALUES (?,?,?,?,?,?,?,?)";
@@ -125,27 +128,34 @@ angular.module('starter.controllers')
             alert("plese enter 10 DIGIT mobile number");
           else {
             window.localStorage['meherShopCategory'] = $scope.loginData.categoty;
-            console.log('http://getmeher.com:3000/'+$scope.loginData.categoty+'/mobile/' + $scope.loginData.mobile+'/'+window.localStorage['MeherDeviceId']);
             $scope.showVerifyLoading ();
+            console.log('http://getmeher.com:3000/'+$scope.loginData.categoty+'/mobile/' + $scope.loginData.mobile+'/'+window.localStorage['MeherDeviceId'])
             $http.get('http://getmeher.com:3000/'+$scope.loginData.categoty+'/mobile/' + $scope.loginData.mobile+'/'+window.localStorage['MeherDeviceId']).
             then(function (response) {
+              console.log("&&^^^^B ^^^^^^^^ %%%%%%")
+              console.log(response)
               $scope.hideVerifyLoading ();
               if(response.data){
                 window.localStorage['meherRetailShop'] = JSON.stringify(response.data);
                 $scope.saveStore(response.data);
+                window.localStorage['otp'] = null;
               }else{
                 alert("Please check Internet & make sure your Store is registered with MEHER");
-                alert(JSON.stringify(response));
+                //alert(JSON.stringify(response));
                 console.log(JSON.stringify(response));
                 $scope.loginData.opt = null;
                 $scope.otpRequested = false;
+                $scope.hideVerifyLoading ();
                 $scope.login();
+                window.localStorage['otp'] = null;
               }
             }, function (response) {
               alert("Please check Internet & make sure your Store is registered with MEHER");
-              console.log(JSON.stringify(response));
+              alert(JSON.stringify(response));
               $scope.loginData.opt = null;
               $scope.otpRequested = false;
+              window.localStorage['otp'] = null;
+              $scope.hideVerifyLoading ();
               $scope.login();
             });
           }

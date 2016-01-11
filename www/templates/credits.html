@@ -1,0 +1,28 @@
+<ion-view view-title="Credits">
+    <ion-content>
+
+        <div class="item item-text-wrap">
+            <p> Refer your customers Meher App to earn more money</p><br>
+            <label class="item item-input">
+                <span class="input-label">Mobile +91</span>
+                <input type="tel"  placeholder="Enter 10 digit mobile number" ng-model="custMobile">
+            </label>
+            <div class="row">
+                <div class="col col-50">
+                    <button id="verify" ng-click="sendRef(custMobile)" class="button button-block icon-right ion-checkmark-round button-energized">SMS </button>
+                </div>
+                <div class="col col-50">
+
+                    <button id="verify" ng-click="sendWhatsApp()" class="button button-block icon-right ion-social-whatsapp-outline button-balanced">Whatsapp</button>
+                </div>
+            </div>
+
+        </div>
+        <div class="card">
+            <div class="item item-text-wrap">
+                <h1> {{referalCount}} Referrals</h1>
+                <h2>Total money: {{referalCount * 10 | currency:"&#8377;"}}</h2>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>
